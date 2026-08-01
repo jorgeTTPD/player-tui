@@ -25,6 +25,7 @@ classifiers = [
 dependencies = [
     "textual>=0.80",
     "dbus-python",
+    "websockets",
 ]
 
 [project.scripts]
