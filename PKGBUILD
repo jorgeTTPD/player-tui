@@ -6,7 +6,7 @@ pkgdesc="Terminal music player with synchronized lyrics"
 arch=('any')
 url="https://github.com/jorgeTTPD/player-tui"
 license=('MIT')
-depends=('python' 'python-textual>=0.80' 'python-dbus')
+depends=('python' 'python-textual>=0.80' 'python-dbus' 'python-websockets')
 makedepends=('python-build' 'python-installer' 'python-wheel')
 source=("${pkgname}-${pkgver}.tar.gz")
 sha256sums=('SKIP')
