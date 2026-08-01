@@ -122,7 +122,6 @@ pyinstaller --onefile --name player-tui player_tui/__main__.py
 | Format | Status |
 |--------|--------|
 | **Arch Linux (PKGBUILD)** | ✅ Included |
-| **Debian/Ubuntu (.deb)** | ✅ `debian/` directory |
 | **Python Wheel** | ✅ `pyproject.toml` |
 | **Standalone Binary** | ✅ PyInstaller |
 
