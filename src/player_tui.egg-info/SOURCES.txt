@@ -1,0 +1,17 @@
+pyproject.toml
+src/player_tui/__init__.py
+src/player_tui/__main__.py
+src/player_tui/main.py
+src/player_tui/tui_player.py
+src/player_tui.egg-info/PKG-INFO
+src/player_tui.egg-info/SOURCES.txt
+src/player_tui.egg-info/dependency_links.txt
+src/player_tui.egg-info/entry_points.txt
+src/player_tui.egg-info/requires.txt
+src/player_tui.egg-info/top_level.txt
+src/player_tui/lyrics_backend/__init__.py
+src/player_tui/lyrics_backend/lyrics_manager.py
+src/player_tui/lyrics_backend/mpris_player.py
+src/player_tui/lyrics_backend/mpris_prober.py
+src/player_tui/lyrics_backend/server.py
+src/player_tui/lyrics_backend/test/test_server.py

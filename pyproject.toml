@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "player-tui"
+version = "1.1.0"
+description = "Terminal music player with synchronized lyrics (MPRIS2 + LRCLIB)"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Jorge", email = "jorgeescalera500@gmail.com"}]
+requires-python = ">=3.10"
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Players",
+    "Topic :: Terminals",
+]
+dependencies = [
+    "textual>=0.80",
+    "dbus-python",
+]
+
+[project.scripts]
+player-tui = "player_tui.__main__:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "pyinstaller"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["player_tui*"]
+
+[tool.setuptools.package-data]
+"player_tui" = ["assets/*.png"]
+
+[tool.pyinstaller]
+name = "player-tui"
+onefile = true
+console = true
+hidden-imports = [
+    "dbus",
+    "gi",
+    "gi.repository.GLib",
+    "gi.repository.GObject",
+    "gi.repository.Gio",
+    "player_tui.lyrics_backend.lyrics_manager",
+    "player_tui.lyrics_backend.mpris_player",
+    "player_tui.lyrics_backend.mpris_prober",
+    "player_tui.lyrics_backend.server",
+]
+collect-data-files = ["assets/*.png"]
