@@ -37,7 +37,6 @@ dev = ["pytest", "ruff", "pyinstaller"]
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["player_tui*"]
-exclude = ["player_tui.lyrics_backend.test*"]
 
 [tool.pyinstaller]
 name = "player-tui"
