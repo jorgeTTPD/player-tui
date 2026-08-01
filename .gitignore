@@ -1,0 +1,45 @@
+# Build artifacts
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg
+*.whl
+
+# Package artifacts
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.deb
+*.rpm
+
+# Source tarballs
+*.tar.gz
+*.tar.xz
+
+# Build directories
+build/
+dist/
+pkg/
+src/*.egg-info/
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+.env
+*.log
+
+# Build artifacts
+*.pkg.tar.zst
+*.tar.gz
+*.tar.xz
