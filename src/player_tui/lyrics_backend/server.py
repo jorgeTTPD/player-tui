@@ -1,8 +1,8 @@
 import asyncio
 import json
 from concurrent.futures import ThreadPoolExecutor
-from lyrics_manager import LyricsManager
-from mpris_player import MprisPlayer
+from .lyrics_manager import LyricsManager
+from .mpris_player import MprisPlayer
 import websockets
 
 
@@ -89,7 +89,6 @@ class LyricsServer:
 
     @route("/poll")
     async def poll(self, websocket):
-        global cnt
         try:
             async for message in websocket:
                 try:

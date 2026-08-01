@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "player-tui"
-version = "1.1.0"
+version = "1.2.0"
 description = "Terminal music player with synchronized lyrics (MPRIS2 + LRCLIB)"
 readme = "README.md"
 license = {text = "MIT"}
@@ -37,9 +37,6 @@ dev = ["pytest", "ruff", "pyinstaller"]
 where = ["src"]
 include = ["player_tui*"]
 
-[tool.setuptools.package-data]
-"player_tui" = ["assets/*.png"]
-
 [tool.pyinstaller]
 name = "player-tui"
 onefile = true
@@ -55,4 +52,3 @@ hidden-imports = [
     "player_tui.lyrics_backend.mpris_prober",
     "player_tui.lyrics_backend.server",
 ]
-collect-data-files = ["assets/*.png"]

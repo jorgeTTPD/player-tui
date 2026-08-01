@@ -1,9 +1,3 @@
 #!/usr/bin/make -f
 %:
 	dh $@ --with python3 --buildsystem=pybuild
-
-override_dh_auto_install:
-	dh_auto_install
-	# Instalar assets
-	mkdir -p debian/player-tui/usr/share/player-tui/assets
-	cp -r src/player_tui/assets/* debian/player-tui/usr/share/player-tui/assets/

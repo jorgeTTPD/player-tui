@@ -6,7 +6,7 @@ Versión Textual del reproductor de la consigna de
 lyrics-on-panel (backend/src) y helpers de la v1 (player/main.py).
 
 Ejecutar:
-    cd ~/Escritorio/reproductorMusica && python3 player/tui_player.py
+    player-tui
 
 Teclas:
     espacio  play/pausa        j  anterior        i  volumen +
@@ -15,19 +15,12 @@ Teclas:
     u        color acento      o  color borde
 """
 
-import sys
 import time
 import json
 from pathlib import Path
 
-BACKEND_DIR = (
-    Path(__file__).resolve().parent.parent / "lyrics-on-panel" / "backend" / "src"
-)
-sys.path.insert(0, str(BACKEND_DIR))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from lyrics_manager import LyricsManager  # noqa: E402
-from main import active_index, badge_of, clamp, fmt_time  # noqa: E402
+from .lyrics_backend.lyrics_manager import LyricsManager
+from .main import active_index, badge_of, clamp, fmt_time
 
 from textual.app import App, ComposeResult  # noqa: E402
 from textual.binding import Binding  # noqa: E402
@@ -224,6 +217,7 @@ class PlayerApp(App):
         self.last_poll = self.poll_at
         self.last_volume = None
         self.state = self.manager.poll_status()
+        self._last_advance = time.monotonic()
 
     def compose(self) -> ComposeResult:
         yield NowPlaying(id="nowplaying")
@@ -297,29 +291,50 @@ class PlayerApp(App):
         self.query_one("#lyrics", LyricsView).lyrics = self.manager.lyrics
 
     def poll(self) -> None:
-        self.state = self.manager.poll_status()
-        self.poll_raw = self.manager.position_ms or 0
-        self.poll_at = time.monotonic()
-        self.last_poll = self.poll_at
-        self._apply_state()
+        """Poll MPRIS state. Resiliente: las excepciones nunca matan el timer."""
+        try:
+            state = self.manager.poll_status()
+            new_raw = self.manager.position_ms or 0
+            now = time.monotonic()
+            # Heartbeat: si está 'playing' pero la posición no avanza >1s, re-consultar.
+            if state.get("playback_status") == "playing":
+                if new_raw != self.poll_raw:
+                    self._last_advance = now
+                elif now - self._last_advance > 1.0:
+                    try:
+                        state = self.manager.poll_status()
+                        new_raw = self.manager.position_ms or 0
+                    except Exception:
+                        pass
+                    self._last_advance = now
+            self.state = state
+            self.poll_raw = new_raw
+            self.poll_at = now
+            self.last_poll = now
+            self._apply_state()
+        except Exception:
+            pass  # reintentar en el próximo tick
 
     def update_position(self) -> None:
-        status = self.state.get("playback_status", "stopped")
-        if status == "playing":
-            pos = self.poll_raw + int((time.monotonic() - self.poll_at) * 1_000_000)
-        else:
-            pos = self.poll_raw
+        try:
+            status = self.state.get("playback_status", "stopped")
+            if status == "playing":
+                pos = self.poll_raw + int((time.monotonic() - self.poll_at) * 1_000_000)
+            else:
+                pos = self.poll_raw
 
-        progress_widget = self.query_one("#progress", ProgressBarView)
-        duration = self.state.get("track", {}).get("duration") or 0
-        if duration > 0:
-            progress_widget.progress = pos / duration
-        else:
-            progress_widget.progress = 0
-        self.query_one("#time-cur", Label).update(fmt_time(pos))
+            progress_widget = self.query_one("#progress", ProgressBarView)
+            duration = self.state.get("track", {}).get("duration") or 0
+            if duration > 0:
+                progress_widget.progress = pos / duration
+            else:
+                progress_widget.progress = 0
+            self.query_one("#time-cur", Label).update(fmt_time(pos))
 
-        lyrics_view = self.query_one("#lyrics", LyricsView)
-        lyrics_view.active_idx = active_index(lyrics_view.lyrics, pos)
+            lyrics_view = self.query_one("#lyrics", LyricsView)
+            lyrics_view.active_idx = active_index(lyrics_view.lyrics, pos)
+        except Exception:
+            pass
 
     def action_play_pause(self) -> None:
         if self.manager.playerobj:

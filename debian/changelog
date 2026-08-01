@@ -1,3 +1,13 @@
+player-tui (1.2.0-1) unstable; urgency=medium
+
+  * New upstream release v1.2.0
+  - Fix ModuleNotFoundError when running globally (relative imports)
+  - Fix frozen lyrics/progress bar (resilient poll timer + heartbeat)
+  - Sync lyrics backend with upstream lyrics-on-panel fixes
+  - Drop broken assets references from packaging
+
+ -- Jorge <jorgeescalera500@gmail.com>  Sat, 01 Aug 2026 00:00:00 +0000
+
 player-tui (1.1.0-1) unstable; urgency=medium
 
   * New upstream release v1.1.0

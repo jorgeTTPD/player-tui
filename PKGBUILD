@@ -1,6 +1,6 @@
 # Maintainer: Jorge <jorgeescalera500@gmail.com>
 pkgname=player-tui
-pkgver=1.1.0
+pkgver=1.2.0
 pkgrel=1
 pkgdesc="Terminal music player with synchronized lyrics"
 arch=('any')

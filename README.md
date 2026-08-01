@@ -2,8 +2,6 @@
 
 Terminal music player with synchronized lyrics — Spotify-style TUI for Linux/macOS.
 
-![Demo](assets/spotify.png)
-
 ---
 
 ## ✨ Features
@@ -16,14 +14,6 @@ Terminal music player with synchronized lyrics — Spotify-style TUI for Linux/m
 - 💾 **Persistent preferences** — Color choices saved to `~/.config/reproductorMusica/config.json`
 - 🖥️ **True transparency** — Uses `ansi_default` for real terminal transparency
 - 📱 **Responsive layout** — Adapts to terminal size
-
----
-
-## 📸 Screenshots
-
-| Main UI | Custom Colors |
-|---------|---------------|
-| ![Main UI](assets/spotify.png) | ![Custom Colors](assets/youtube.png) |
 
 ---
 

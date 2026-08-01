@@ -1,7 +1,0 @@
-textual>=0.80
-dbus-python
-
-[dev]
-pytest
-ruff
-pyinstaller
