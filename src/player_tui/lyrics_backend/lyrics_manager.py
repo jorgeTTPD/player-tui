@@ -69,15 +69,15 @@ class LyricsManager:
         """
         playernames = find_players()
 
-        # Selection Logic:
-        # 1. If there is no avaiable mpris complaint player, return empty State.
-        # 2. If a specific target is requested:
-        # 2.1 If the requested target exists in the mpris2 dbus interface: pick it.
-        # 2.2 Otherwise, return empty state as the requested player is not playing.
-        # 3. If no target requested, and then we enter the multiplexing mode.
-        # 3.1 If there is a player with playing status, pick it.
-        # 3.2 If there is no player with playing status, fallback to the first player(paused/stopped) exists in mpris dbus.
-        # 3.2.1 If there is no player exists in the mpris dbus, return empty state.
+
+
+
+
+
+
+
+
+
         def set_free():
             self.setup()
             return self._get_empty_state()
@@ -92,28 +92,28 @@ class LyricsManager:
             else:
                 return self._get_empty_state()
         else:
-            # Global mode: find the best player
-            # If we have a current player, check if it's still valid
+
+
             if self.playername and self.playername in playernames:
                 try:
                     player = MprisPlayer(self.playername)
                     if player.obj:
                         if player.playback_status == PlaybackStatus.PLAYING:
-                            # Current player is playing, use it
+
                             current_playername = self.playername
                             current_playerobj = player
                         else:
-                            # Current player paused/stopped, check for other playing players
+
                             playing_playernames = find_playing_players(playernames)
                             if playing_playernames:
                                 current_playername = playing_playernames[0]
                             else:
-                                # No playing player, keep current one
+
                                 current_playername = self.playername
                                 current_playerobj = player
                 except Exception:
                     pass
-            # No valid current player, find one
+
             if not current_playerobj:
                 playing_playernames = find_playing_players(playernames)
                 if playing_playernames:
@@ -127,7 +127,7 @@ class LyricsManager:
             current_playerobj = MprisPlayer(current_playername)
         if not current_playerobj.obj:
             return set_free()
-        # Cache DBus properties to avoid repeated calls
+
         try:
             track_info = current_playerobj.track_info
             playback_status = current_playerobj.playback_status
@@ -144,7 +144,7 @@ class LyricsManager:
             self.title = track_info["title"]
             self.artist = track_info["artist"]
             self.album = track_info["album"]
-            # Check if this player has cached lyrics for current track
+
             cached = self.lyrics_cache.get(current_playername)
             if (
                 cached
@@ -215,7 +215,7 @@ class LyricsManager:
             pass
 
     def _fetch_lyrics(self, playername, track_info, fetch_id):
-        # Check if this fetch is still current
+
         if self._fetch_id != fetch_id:
             return
         title = track_info["title"]
@@ -235,11 +235,11 @@ class LyricsManager:
             else:
                 lyrics = self._fetch_lyrics_local(url)
                 if lyrics is None:
-                    # Check again before expensive HTTP calls
+
                     if self._fetch_id != fetch_id:
                         return
                     lyrics = self._fetch_lyrics_lrclib(title, artist, album, length)
-            # Only write if this fetch is still current
+
             if self._fetch_id == fetch_id:
                 self.lyrics = lyrics
                 if lyrics:
@@ -340,7 +340,7 @@ class LyricsManager:
                         return result["syncedLyrics"]
             return None
 
-        # Run all fetches in parallel
+
         with ThreadPoolExecutor(max_workers=3) as executor:
             futures = {
                 executor.submit(fetch_exact): 0,
@@ -354,7 +354,7 @@ class LyricsManager:
                     results[priority] = future.result()
                 except Exception:
                     pass
-        # Pick best result by priority
+
         for result in results:
             if result:
                 return self._parse_lrc(result)
@@ -392,7 +392,7 @@ class LyricsManager:
                 end = mid - 1
         if end < 0:
             return None
-        # If current lyric is empty, find the previous non-empty one
+
         while end >= 0 and not self.lyrics[end]["lyric"]:
             end -= 1
         if end < 0:

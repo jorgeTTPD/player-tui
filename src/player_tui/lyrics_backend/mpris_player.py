@@ -6,7 +6,7 @@ MPRIS_ROOT_IFACE = 'org.mpris.MediaPlayer2'
 MPRIS_PLAYER_IFACE = 'org.mpris.MediaPlayer2.Player'
 MPRIS_OBJECT_PATH = '/org/mpris/MediaPlayer2'
 
-# Cached DBus session bus
+
 _session_bus = None
 
 def get_session_bus():
@@ -129,11 +129,11 @@ class MprisPlayer:
         val = self._get_property(MPRIS_ROOT_IFACE, 'SupportedMimeTypes')
         return list(val) if val else []
 
-    # ==========================================
-    # org.mpris.MediaPlayer2.Player (Player Interface)
-    # ==========================================
 
-    # --- Methods ---
+
+
+
+
     def next(self):
         try: self.player_iface.Next()
         except: pass
@@ -164,17 +164,17 @@ class MprisPlayer:
         except: pass
 
 
-    # --- Properties ---
+
     @property
     def playback_status(self):
-        # "Playing", "Paused", "Stopped"
+
         val = self._get_property(MPRIS_PLAYER_IFACE, 'PlaybackStatus')
         return PlaybackStatus(str(val)) if val else PlaybackStatus.STOPPED
     
     
     @property
     def loop_status(self):
-        # "None", "Track", "Playlist"
+
         val = self._get_property(MPRIS_PLAYER_IFACE, 'LoopStatus')
         return str(val) if val else "None"
 
@@ -218,7 +218,7 @@ class MprisPlayer:
     def _unwrap_list(self, val):
         if not val:
             return []
-        # Handle case where val is a string instead of list
+
         if isinstance(val, str):
             return [val]
         return [str(v) for v in val]
@@ -257,7 +257,7 @@ class MprisPlayer:
 
     @property
     def position(self):
-        # Returns position in microseconds
+
         val = self._get_property(MPRIS_PLAYER_IFACE, 'Position')
         return int(val) if val is not None else 0
 

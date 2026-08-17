@@ -22,11 +22,11 @@ from pathlib import Path
 from .lyrics_backend.lyrics_manager import LyricsManager
 from .main import active_index, badge_of, clamp, fmt_time
 
-from textual.app import App, ComposeResult  # noqa: E402
-from textual.binding import Binding  # noqa: E402
-from textual.containers import Horizontal, Vertical  # noqa: E402
-from textual.reactive import reactive  # noqa: E402
-from textual.widgets import Label, Static  # noqa: E402
+from textual.app import App, ComposeResult
+from textual.binding import Binding
+from textual.containers import Horizontal, Vertical
+from textual.reactive import reactive
+from textual.widgets import Label, Static
 
 POLL_INTERVAL = 0.5
 RENDER_INTERVAL = 0.1
@@ -296,7 +296,7 @@ class PlayerApp(App):
             state = self.manager.poll_status()
             new_raw = self.manager.position_ms or 0
             now = time.monotonic()
-            # Heartbeat: si está 'playing' pero la posición no avanza >1s, re-consultar.
+
             if state.get("playback_status") == "playing":
                 if new_raw != self.poll_raw:
                     self._last_advance = now
@@ -313,7 +313,7 @@ class PlayerApp(App):
             self.last_poll = now
             self._apply_state()
         except Exception:
-            pass  # reintentar en el próximo tick
+            pass
 
     def update_position(self) -> None:
         try:
