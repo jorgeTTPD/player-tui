@@ -11,11 +11,11 @@ from .mpris_player import MprisPlayer, PlaybackStatus
 
 
 class LyricsManager:
-    """
-    Core Controller: Manages player selection, tracking, and lyrics fetching.
+    
 
-    Note: ms here == microseconds, not miliseconds.
-    """
+
+
+
 
     def __init__(self):
         self.lyrics_cache = {}
@@ -56,17 +56,17 @@ class LyricsManager:
         self.available_players = available_players or []
 
     def poll_status(self, requested_playername=None):
-        """
-        Polls for player changes and state updates.
+        
 
-        requested_playername == None => Global Mode
-                        == 'org.mpris.MediaPlayer2.spotify' => Spotify Mode
-                        == 'org.mpris.MediaPlayer2.yesplaymusic' => YesPlayMusic Mode
 
-        Args:
-            requested_playername (str, optional): The specific DBus name to track (e.g. 'org.mpris.MediaPlayer2.spotify').
-                                             If None, defaults to the first available player.
-        """
+
+
+
+
+
+
+
+
         playernames = find_players()
 
 
@@ -255,7 +255,7 @@ class LyricsManager:
                 self.lyrics = None
 
     def _http_get(self, url, timeout=5):
-        """Simple HTTP GET using urllib. Returns (status_code, data) tuple."""
+        
         try:
             with urllib.request.urlopen(url, timeout=timeout) as resp:
                 return resp.status, resp.read().decode("utf-8")
@@ -263,7 +263,7 @@ class LyricsManager:
             return None, None
 
     def _fetch_lyrics_ypm(self, title):
-        """Fetch lyrics from YesPlayMusic localhost API. Returns parsed lyrics or None."""
+        
         ypm_base_url = "http://localhost:27232"
         status, text = self._http_get(f"{ypm_base_url}/player")
         if status != 200:
@@ -285,7 +285,7 @@ class LyricsManager:
         return None
 
     def _fetch_lyrics_lxmusic(self, port=23330):
-        """Fetch lyrics from LX Music localhost API. Returns parsed lyrics or None."""
+        
         lxmusic_base_url = f"http://localhost:{port}"
         status, text = self._http_get(f"{lxmusic_base_url}/lyric")
         if status == 200 and text:
@@ -293,7 +293,7 @@ class LyricsManager:
         return None
 
     def _fetch_lyrics_local(self, song_path):
-        """Fetch lyrics from disk."""
+        
         if not song_path.startswith("file://"):
             return None
         lrc_path = Path(unquote(urlparse(song_path).path)).with_suffix(".lrc")
@@ -304,7 +304,7 @@ class LyricsManager:
         return self._parse_lrc(content)
 
     def _fetch_lyrics_lrclib(self, title, artist, album, length):
-        """Fetch lyrics from lrclib.net (compatible mode). Returns parsed lyrics or None."""
+        
         duration_sec = length // 1000000 if length else None
         params = urlencode(
             {"track_name": title, "artist_name": artist, "album_name": album}

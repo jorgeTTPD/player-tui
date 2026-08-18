@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Reproductor de música estilo Spotify, v2 con Textual.
 
-Versión Textual del reproductor de la consigna de
-~/Escritorio/reproductorMusica/consigna.text. Reutiliza la lógica de letras de
-lyrics-on-panel (backend/src) y helpers de la v1 (player/main.py).
 
-Ejecutar:
-    player-tui
 
-Teclas:
-    espacio  play/pausa        j  anterior        i  volumen +
-    q        salir             l  siguiente       k  volumen -
-    m        silenciar
-    u        color acento      o  color borde
-"""
+
+
+
+
+
+
+
+
+
+
+
+
 
 import time
 import json
@@ -131,7 +131,7 @@ class LyricsView(Static):
 
 
 class ProgressBarView(Static):
-    """Barra de progreso dibujada con caracteres (fondo transparente)."""
+    
 
     progress = reactive(0.0)
     fill_color = reactive("#1DB954")
@@ -291,7 +291,7 @@ class PlayerApp(App):
         self.query_one("#lyrics", LyricsView).lyrics = self.manager.lyrics
 
     def poll(self) -> None:
-        """Poll MPRIS state. Resiliente: las excepciones nunca matan el timer."""
+        
         try:
             state = self.manager.poll_status()
             new_raw = self.manager.position_ms or 0

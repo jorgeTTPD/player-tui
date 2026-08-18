@@ -10,7 +10,7 @@ MPRIS_OBJECT_PATH = '/org/mpris/MediaPlayer2'
 _session_bus = None
 
 def get_session_bus():
-    """Get or create a cached DBus session bus."""
+    
     global _session_bus
     if _session_bus is None:
         _session_bus = dbus.SessionBus()
@@ -24,10 +24,10 @@ class PlaybackStatus(Enum):
 
 
 class MprisPlayer:
-    """
-    Wraps a single MPRIS2 media player DBus service.
-    Implements org.mpris.MediaPlayer2 and org.mpris.MediaPlayer2.Player interfaces.
-    """
+    
+
+
+
     def __init__(self, dbus_identifier):
         self.dbus_identifier = dbus_identifier
         self.bus = get_session_bus()
@@ -58,7 +58,7 @@ class MprisPlayer:
 
 
     def raise_player(self):
-        """Brings the media player's user interface to the front."""
+        
         if self.can_raise:
             try:
                 self.root_iface.Raise()
@@ -67,7 +67,7 @@ class MprisPlayer:
 
 
     def quit(self):
-        """Causes the media player to stop running."""
+        
         if self.can_quit:
             try:
                 self.root_iface.Quit()
@@ -225,7 +225,7 @@ class MprisPlayer:
 
     @property
     def track_info(self):
-        """Extract commonly used track info from metadata."""
+        
         meta = self.metadata
         return {
             'title': self._unwrap_str(meta.get('xesam:title', '')),
@@ -311,7 +311,7 @@ class MprisPlayer:
 
 
     def get_full_info(self):
-        """Retrieves all properties from both MPRIS2 interfaces as a standard Python dictionary."""
+        
         data = {}
         if not self.obj: return data
         

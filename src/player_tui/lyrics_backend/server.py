@@ -7,7 +7,7 @@ import websockets
 
 
 def route(*paths):
-    """Decorator to mark a method as a WebSocket route handler."""
+    
     def decorator(func):
         func._ws_routes = [p.lstrip("/") for p in paths]
         return func
@@ -15,14 +15,14 @@ def route(*paths):
 
 
 class LyricsServer:
-    """
-    WebSocket server for lyrics display clients.
+    
 
-    Endpoints:
-        ws://host:port/healthcheck  -> {"status": "ok"}
-        ws://host:port/poll         -> {...player state...}
-        ws://host:port/control      <- {"action": "play|pause|...", "player": "..."}
-    """
+
+
+
+
+
+
     def __init__(self, host="127.0.0.1", port=23560):
         self.host = host
         self.port = port
@@ -33,7 +33,7 @@ class LyricsServer:
 
 
     def _collect_routes(self):
-        """Collect all methods decorated with @route."""
+        
         routes = {}
         for name in dir(self):
             method = getattr(self, name)
@@ -44,7 +44,7 @@ class LyricsServer:
 
 
     def process_request(self, connection, request):
-        """Store the request path for later use in handler."""
+        
         self._connection_paths[id(connection)] = request.path.strip("/")
 
 
@@ -58,7 +58,7 @@ class LyricsServer:
 
 
     async def _poll_loop(self):
-        """Background task: polls MPRIS every 1s and writes current lyric to files."""
+        
         while True:
             try:
                 loop = asyncio.get_running_loop()
@@ -121,7 +121,7 @@ class LyricsServer:
 
 
     def _execute_control(self, action, player_name):
-        """Execute playback control. Returns True on success, False on failure."""
+        
         name = player_name or self.manager.playername
         if not name:
             return False

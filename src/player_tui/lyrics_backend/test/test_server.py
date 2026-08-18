@@ -21,9 +21,9 @@ async def test_poll():
 
 
 async def test_control_ypm():
-    '''
-    YesPlayMusic的PlaybackStatus控制存在问题。正常情况下，发送两次play信号, 歌曲仍应处于播放状态；但Yesplaymusic会暂停播放。pause同理。
-    '''
+    
+
+
     async with websockets.connect(f"{BASE}/control") as ws:
         await ws.send('{"action": "play", "player": "org.mpris.MediaPlayer2.yesplaymusic"}')
         await asyncio.sleep(5)

@@ -3,9 +3,9 @@ import re
 from .mpris_player import PlaybackStatus, get_session_bus
 
 def find_players():
-    """
-    Finds all running media players that implement the MPRIS2 interface.
-    """
+    
+
+
     try:
         bus = get_session_bus()
         playernames = []
@@ -17,14 +17,14 @@ def find_players():
         return []
 
 def find_playing_players(playernames=None):
-    '''
-    Finds all running media players that implement the MPRIS2 interface, and current playing something.
+    
 
-    Notice:
-    From our implementation, the ordering of players is determined solely by their first appearance in
-    the MPRIS DBus via `find_players()` and remains stable across playback state changes. Therefore,
-    earlier-registered players always take priority whenever they enter the Playing state.
-    '''
+
+
+
+
+
+
     bus = get_session_bus()
     if playernames is None:
         playernames = find_players()

@@ -1,4 +1,4 @@
-"""Entry point for player-tui."""
+
 from .tui_player import main
 
 if __name__ == "__main__":

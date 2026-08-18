@@ -1,7 +1,7 @@
-"""Helper functions for player-tui.
 
-Extraídas de la v1 del reproductor original (~/Escritorio/reproductorMusica/player/main.py).
-"""
+
+
+
 
 
 def clamp(value, lo, hi):
